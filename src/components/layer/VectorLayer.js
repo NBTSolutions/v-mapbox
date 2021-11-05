@@ -48,7 +48,6 @@ export default {
         type: 'vector',
         ...this.source,
       };
-
       this.map.on('dataloading', this.$_watchSourceLoading);
       try {
         this.map.addSource(this.sourceId, source);
@@ -59,7 +58,7 @@ export default {
         }
       }
       this.$_addLayer();
-      this.$_bindLayerEvents(layerEvents);
+      this.$_bindLayerEvents(this.registeredEvents);
       this.map.off('dataloading', this.$_watchSourceLoading);
       this.initial = false;
     },

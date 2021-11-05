@@ -30,7 +30,7 @@ const mapboxLayerStyleProps = {
 const componentProps = {
   clearSource: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   replaceSource: {
     type: Boolean,
@@ -48,6 +48,10 @@ export default {
     ...mapboxSourceProps,
     ...mapboxLayerStyleProps,
     ...componentProps,
+    registeredEvents: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   inject: ['mapbox', 'map'],
@@ -136,25 +140,12 @@ export default {
   },
 
   beforeDestroy() {
-    if (this.map && this.map.loaded()) {
-      try {
-        this.map.removeLayer(this.layerId);
-      } catch (err) {
-        this.$_emitEvent('layer-does-not-exist', {
-          layerId: this.sourceId,
-          error: err,
-        });
-      }
-      if (this.clearSource) {
-        try {
-          this.map.removeSource(this.sourceId);
-        } catch (err) {
-          this.$_emitEvent('source-does-not-exist', {
-            sourceId: this.sourceId,
-            error: err,
-          });
-        }
-      }
+    if (this.map.getLayer(this.layerId)) {
+      this.map.removeLayer(this.layerId);
+    }
+
+    if (this.clearSource && this.map.getSource(this.sourceId)) {
+      this.map.removeSource(this.sourceId);
     }
   },
 
@@ -188,6 +179,7 @@ export default {
 
     move(beforeId) {
       this.map.moveLayer(this.layerId, beforeId);
+
       this.$_emitEvent('layer-moved', {
         layerId: this.layerId,
         beforeId: beforeId,

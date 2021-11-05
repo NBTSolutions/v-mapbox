@@ -56,7 +56,7 @@ export default {
         }
       }
       this.$_addLayer();
-      this.$_bindLayerEvents(layerEvents);
+      this.$_bindLayerEvents(this.registeredEvents);
       this.initial = false;
     },
 
