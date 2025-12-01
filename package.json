@@ -1,6 +1,6 @@
 {
   "name": "v-mapbox",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "private": false,
   "sideEffects": [
     "*.css"
@@ -66,7 +66,7 @@
     "husky": "^6.0.0",
     "jsdom-global": "^3.0.2",
     "lint-staged": "^11.0.0",
-    "mapbox-gl": "^1.13.1",
+    "mapbox-gl": "^3.16.0",
     "prettier": "^2.3.1",
     "require-extension-hooks": "^0.3.3",
     "require-extension-hooks-babel": "^1.0.0",
@@ -83,6 +83,11 @@
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2"
+  },
+  "overrides": {
+    "require-extension-hooks-vue": {
+      "vue-template-compiler": "$vue-template-compiler"
+    }
   },
   "engines": {
     "node": ">=12.18.3"
